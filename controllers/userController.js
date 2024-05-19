@@ -1,10 +1,11 @@
 // controllers/userController.js
-const User = require("../models/userModel");
+const User = require('../models/userModel');
 
 const userController = {
   createUser: (req, res) => {
     const newUser = {
       nome: req.body.nome,
+      sobrenome: req.body.sobrenome,
       email: req.body.email,
       password: req.body.password,
     };
@@ -23,7 +24,7 @@ const userController = {
         return res.status(500).json({ error: err.message });
       }
       if (result.length === 0) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: 'User not found' });
       }
       res.json(result[0]);
     });
@@ -39,18 +40,30 @@ const userController = {
   },
 
   updateUser: (req, res) => {
-    const updatedUser = {
-      nome: req.body.nome,
-      email: req.body.email,
-      password: req.body.password,
-    };
+    const updatedUser = {};
+
+    if (req.body.nome) {
+      updatedUser.nome = req.body.nome;
+    }
+
+    if (req.body.sobrenome) {
+      updatedUser.sobrenome = req.body.sobrenome;
+    }
+
+    if (req.body.email) {
+      updatedUser.email = req.body.email;
+    }
+
+    if (req.body.password) {
+      updatedUser.password = req.body.password;
+    }
 
     User.update(req.params.id, updatedUser, (err, result) => {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
       if (result.affectedRows === 0) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: 'User not found' });
       }
       res.json({ id: req.params.id, ...updatedUser });
     });
@@ -62,7 +75,7 @@ const userController = {
         return res.status(500).json({ error: err.message });
       }
       if (result.affectedRows === 0) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: 'User not found' });
       }
       res.status(204).end();
     });
