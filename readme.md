@@ -223,7 +223,7 @@ Authorization: Bearer
 
      ```json
      {
-       "message": "Flashcards inserted successfully""
+       "message": "Flashcards inserted successfully"
      }
      ```
 
