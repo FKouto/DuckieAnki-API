@@ -70,9 +70,9 @@ project-root/
    node index.js
    ```
 
-### Rotas da API
+# Rotas da API
 
-#### Autenticação
+## Autenticação
 
 1. **Registro de Usuário**
 
@@ -82,8 +82,7 @@ project-root/
 
      ```json
      {
-       "firstName": "John",
-       "lastName": "Doe",
+       "nome": "John",
        "email": "john.doe@example.com",
        "password": "senha123"
      }
@@ -118,30 +117,60 @@ project-root/
      }
      ```
 
-#### Usuários
+## Usuários
+### Obter todos os usuários
 
-1. **Obter Informações do Usuário**
+- **Método**: `GET`
+- **URL**: `/api/users/users`
+- **Cabeçalho**:
 
-   - **URL**: `/api/users/profile`
-   - **Método**: `GET`
-   - **Cabeçalho**:
+```http
+Authorization: Bearer
+```
 
-     ```http
-     Authorization: Bearer token_jwt_aqui
-     ```
+### Obter Usuário por ID
 
-   - **Resposta**:
+- **Método**: `GET`
+- **URL**: `/api/users/{ID}`
+- **Cabeçalho**:
 
-     ```json
-     {
-       "id": 1,
-       "firstName": "John",
-       "lastName": "Doe",
-       "email": "john.doe@example.com"
-     }
-     ```
+```http
+Authorization: Bearer
+```
 
-#### Flashcards
+### Atualizar Usuário por ID
+
+- **Método**: `GET`
+- **URL**: `/api/users/{ID}`
+- **Cabeçalho**:
+
+```http
+Authorization: Bearer
+```
+
+```json
+{
+  "nome": "João",
+  "sobrenome": "Rodrigues",
+  "email": "joao.rodrigues@example.com",
+  "password": "senha123"
+}
+```
+
+### Excluir usuário
+
+- **Método**: `PUT`
+- **URL**: `/api/users/{ID}`
+- **Cabeçalho**:
+
+```http
+Authorization: Bearer
+```
+
+- **Corpo da Requisição**:
+    - Não é necessário
+
+## Flashcards
 
 1. **Criar flashcard**
 
@@ -219,85 +248,3 @@ project-root/
        "message": "Flashcards do usuário autenticado"
      }
      ```
-
-## URLs e Exemplos de Requisições
-
-### Registro de Usuário
-
-- **Método**: `POST`
-- **URL**: `/api/auth/register`
-- **Corpo da Requisição**:
-
-```json
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "john.doe@example.com",
-  "password": "senha123"
-}
-```
-
-### Login de Usuário
-
-- **Método**: `POST`
-- **URL**: `/api/auth/login`
-- **Corpo da Requisição**:
-
-```json
-{
-  "email": "john.doe@example.com",
-  "password": "senha123"
-}
-```
-
-### Obter todos os usuários
-
-- **Método**: `GET`
-- **URL**: `/api/users/users`
-- **Cabeçalho**:
-
-```http
-Authorization: Bearer
-```
-
-### Obter Usuário por ID
-
-- **Método**: `GET`
-- **URL**: `/api/users/{ID}`
-- **Cabeçalho**:
-
-```http
-Authorization: Bearer
-```
-
-### Atualizar Usuário por ID
-
-- **Método**: `GET`
-- **URL**: `/api/users/{ID}`
-- **Cabeçalho**:
-
-```http
-Authorization: Bearer
-```
-
-```json
-{
-  "nome": "João",
-  "sobrenome": "Rodrigues",
-  "email": "joao.rodrigues@example.com",
-  "password": "senha123"
-}
-```
-
-### Excluir usuário
-
-- **Método**: `PUT`
-- **URL**: `/api/users/{ID}`
-- **Cabeçalho**:
-
-```http
-Authorization: Bearer
-```
-
-- **Corpo da Requisição**:
-    - Não é necessário
