@@ -248,3 +248,33 @@ Authorization: Bearer
        "message": "Flashcards do usuário autenticado"
      }
      ```
+---
+## Banco de dados
+```
+CREATE DATABASE duckieanki;
+USE DuckieAnki;
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+CREATE TABLE Decks (
+  deckId VARCHAR(255) PRIMARY KEY,
+  userId INT,
+  FOREIGN KEY (userId) REFERENCES Users(id)
+);
+CREATE TABLE Questions (
+  questionId INT AUTO_INCREMENT PRIMARY KEY,
+  deckId VARCHAR(255),
+  question TEXT NOT NULL,
+  correctAnswer INT NOT NULL,
+  FOREIGN KEY (deckId) REFERENCES Decks(deckId)
+);
+CREATE TABLE Responses (
+  responseId INT AUTO_INCREMENT PRIMARY KEY,
+  questionId INT,
+  response TEXT NOT NULL,
+  FOREIGN KEY (questionId) REFERENCES Questions(questionId)
+);
+```
