@@ -7,7 +7,6 @@ const authController = {
   register: (req, res) => {
     const newUser = {
       nome: req.body.nome,
-      sobrenome: req.body.sobrenome,
       email: req.body.email,
       password: req.body.password,
     };

@@ -7,8 +7,8 @@ const User = {
     bcrypt.hash(user.password, 10, (err, hash) => {
       if (err) return callback(err);
       const query =
-        "INSERT INTO users (nome, sobrenome, email, password) VALUES (?, ?, ?, ?)";
-      db.query(query, [user.nome, user.sobrenome, user.email, hash], callback);
+        "INSERT INTO users (nome, email, password) VALUES (?, ?, ?, ?)";
+      db.query(query, [user.nome, user.email, hash], callback);
     });
   },
   findById: (id, callback) => {
@@ -27,10 +27,10 @@ const User = {
     bcrypt.hash(user.password, 10, (err, hash) => {
       if (err) return callback(err);
       const query =
-        "UPDATE users SET nome = ?, sobrenome = ?, email = ?, password = ? WHERE id = ?";
+        "UPDATE users SET nome = ?, email = ?, password = ? WHERE id = ?";
       db.query(
         query,
-        [user.nome, user.sobrenome, user.email, hash, id],
+        [user.nome, user.email, hash, id],
         callback
       );
     });
