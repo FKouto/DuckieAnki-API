@@ -7,7 +7,7 @@ const User = {
     bcrypt.hash(user.password, 10, (err, hash) => {
       if (err) return callback(err);
       const query =
-        "INSERT INTO users (nome, email, password) VALUES (?, ?, ?, ?)";
+        "INSERT INTO users (nome, email, password) VALUES (?, ?, ?)";
       db.query(query, [user.nome, user.email, hash], callback);
     });
   },
