@@ -67,7 +67,7 @@ project-root/
 5. **Iniciar o Servidor**
 
    ```bash
-   node index.js
+   node server.js
    ```
 
 # Rotas da API
