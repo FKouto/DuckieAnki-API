@@ -16,6 +16,15 @@ const User = {
     const query = "SELECT * FROM users WHERE id = ?";
     db.query(query, [id], callback);
   },
+  // Buscar o usuário por email (login)
+  findByEmail: (email, callback) => {
+    const query = "SELECT * FROM users WHERE email = ?";
+    db.query(query, [email], callback);
+  },
+  findAll: (callback) => {
+    const query = "SELECT * FROM users";
+    db.query(query, callback);
+  },
   // Buscar todos os usuários (Read)
   // findAll: (callback) => {
   //   const query = 'SELECT * FROM users';
