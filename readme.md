@@ -38,8 +38,8 @@ API/
 1. **Clonar o Repositório**
 
    ```bash
-   git clone <URL_DO_REPOSITORIO>
-   cd project-root
+   git clone git@github.com:FKouto/DuckieAnki-API.git
+   cd DuckieAnki-API
    ```
 
 2. **Instalar Dependências**
