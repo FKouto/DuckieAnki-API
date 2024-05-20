@@ -6,7 +6,6 @@ const userController = {
   createUser: (req, res) => {
     const newUser = {
       nome: req.body.nome,
-      sobrenome: req.body.sobrenome,
       email: req.body.email,
       password: req.body.password,
     };
@@ -45,10 +44,6 @@ const userController = {
 
     if (req.body.nome) {
       updatedUser.nome = req.body.nome;
-    }
-
-    if (req.body.sobrenome) {
-      updatedUser.sobrenome = req.body.sobrenome;
     }
 
     if (req.body.email) {
