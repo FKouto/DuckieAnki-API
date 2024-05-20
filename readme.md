@@ -1,24 +1,24 @@
-## Documentação da API REST para Gerenciamento de Usuários e Flashcards
+## Documentação da API REST para Gerenciamento de Usuários e Decks
 
 ### Visão Geral
 
-Esta API permite a criação, leitura, atualização e exclusão (CRUD) de usuários e flashcards. Os usuários podem se registrar, fazer login e criar flashcards. Cada flashcard é composto por uma pergunta e múltiplas respostas possíveis, com uma indicação de qual resposta é a correta. A autenticação é realizada via JWT.
+Esta API permite a criação, leitura, atualização e exclusão (CRUD) de usuários e Decks. Os usuários podem se registrar, fazer login e criar Decks. Cada flashcard é composto por uma pergunta e múltiplas respostas possíveis, com uma indicação de qual resposta é a correta. A autenticação é realizada via JWT.
 
 ### Estrutura de Diretórios
 
 ```
-project-root/
+API/
 │
 ├── config/
-│   └── db.js
+│   └── database.js
 │
 ├── controllers/
 │   ├── authController.js
 │   ├── userController.js
-│   └── flashcardController.js
+│   └── deckController.js
 │
 ├── middlewares/
-│   └── authenticate.js
+│   └── authMiddleware.js
 │
 ├── models/
 │   └── userModel.js
@@ -26,7 +26,7 @@ project-root/
 ├── routes/
 │   ├── authRoutes.js
 │   ├── userRoutes.js
-│   └── flashcardRoutes.js
+│   └── deckRoutes.js
 │
 ├── index.js
 ├── package.json
@@ -50,7 +50,7 @@ project-root/
 
 3. **Configurar Banco de Dados**
 
-   Criar um banco de dados MySQL e atualizar as configurações no arquivo `config/db.js`.
+   Criar um banco de dados MySQL e atualizar as configurações no arquivo `config/database.js`.
 
 4. **Configurar Variáveis de Ambiente**
 
@@ -67,7 +67,7 @@ project-root/
 5. **Iniciar o Servidor**
 
    ```bash
-   node server.js
+   npm run start
    ```
 
 # Rotas da API
@@ -76,15 +76,15 @@ project-root/
 
 1. **Registro de Usuário**
 
-   - **URL**: `/api/auth/register`
+   - **URL**: `/auth/register`
    - **Método**: `POST`
    - **Corpo da Requisição**:
 
      ```json
      {
-       "nome": "John",
-       "email": "john.doe@example.com",
-       "password": "senha123"
+       "nome": "",
+       "email": "",
+       "password": ""
      }
      ```
 
@@ -98,14 +98,14 @@ project-root/
 
 2. **Login de Usuário**
 
-   - **URL**: `/api/auth/login`
+   - **URL**: `/auth/login`
    - **Método**: `POST`
    - **Corpo da Requisição**:
 
      ```json
      {
-       "email": "john.doe@example.com",
-       "password": "senha123"
+       "email": "",
+       "password": ""
      }
      ```
 
@@ -113,15 +113,16 @@ project-root/
 
      ```json
      {
-       "token": "token_jwt_aqui"
+       "token": ""
      }
      ```
 
 ## Usuários
+
 ### Obter todos os usuários
 
 - **Método**: `GET`
-- **URL**: `/api/users/users`
+- **URL**: `/user/list`
 - **Cabeçalho**:
 
 ```http
@@ -131,7 +132,7 @@ Authorization: Bearer
 ### Obter Usuário por ID
 
 - **Método**: `GET`
-- **URL**: `/api/users/{ID}`
+- **URL**: `/user/{{ID}}`
 - **Cabeçalho**:
 
 ```http
@@ -140,8 +141,8 @@ Authorization: Bearer
 
 ### Atualizar Usuário por ID
 
-- **Método**: `GET`
-- **URL**: `/api/users/{ID}`
+- **Método**: `PUT`
+- **URL**: `/api/user/{ID}`
 - **Cabeçalho**:
 
 ```http
@@ -150,17 +151,17 @@ Authorization: Bearer
 
 ```json
 {
-  "nome": "João",
-  "sobrenome": "Rodrigues",
-  "email": "joao.rodrigues@example.com",
-  "password": "senha123"
+  "nome": "",
+  "sobrenome": "",
+  "email": "",
+  "password": ""
 }
 ```
 
 ### Excluir usuário
 
-- **Método**: `PUT`
-- **URL**: `/api/users/{ID}`
+- **Método**: `DELETE`
+- **URL**: `/user/delete/{{ID}}`
 - **Cabeçalho**:
 
 ```http
@@ -168,91 +169,91 @@ Authorization: Bearer
 ```
 
 - **Corpo da Requisição**:
-    - Não é necessário
+  - Não é necessário
 
-## Flashcards
+## Decks
 
-1. **Criar flashcard**
+1.  **Criar**
 
-   - **URL**: `/api/flashcards`
-   - **Método**: `POST`
-   - **Cabeçalho**:
+    - **URL**: `/deck/create`
+    - **Método**: `POST`
+    - **Cabeçalho**:
 
-     ```http
-     Authorization: Bearer
-     ```
+      ```http
+      Authorization: Bearer
+      ```
 
-   - **Corpo da Requisição**:
+    - **Corpo da Requisição**:
 
-     ```json
-     "UserDecks": {
-     "Decks": [
+           ```json
+           {
+
+      "UserDecks": {
+      "Decks": [
       {
-        "deckId": "Nome Deck",
-        "questions": [
-          {
-            "question": "Question 1",
-            "responses": ["Response 1", "Response 2", "Response 3"],
-            "correctAnswer": 0
-          },
-          {
-            "question": "Question 2",
-            "responses": ["Response A", "Response B", "Response C"],
-            "correctAnswer": 1
-          }
-        ]
+      "deckId": "Title",
+      "questions": [
+      {
+      "question": "Question 1",
+      "responses": ["Response 1", "Response 2", "Response 3"],
+      "correctAnswer": 0
       },
       {
-        "deckId": "Nome Deck",
-        "questions": [
-          {
-            "question": "Question 1",
-            "responses": ["Response 1", "Response 2", "Response 3"],
-            "correctAnswer": 0
-          },
-          {
-            "question": "Question 2",
-            "responses": ["Response A", "Response B", "Response C"],
-            "correctAnswer": 1
-          }
-        ]
+      "question": "Question 2",
+      "responses": ["Response A", "Response B", "Response C"],
+      "correctAnswer": 1
       }
-     ```
+      ]
+      }
+      ]
+      }
+      }
 
-   - **Resposta**:
+      ```
 
-     ```json
-     {
-       "message": "Flashcards inserted successfully"
-     }
-     ```
+      ```
 
-2. **Ler flashcard**
+    - **Resposta**:
 
-   - **URL**: `/api/flashcards/`
-   - **Método**: `GET`
-   - **Cabeçalho**:
+      ```json
+      {
+        "message": "Decks inserted successfully"
+      }
+      ```
 
-     ```http
-     Authorization: Bearer
-     ```
+2.  **Ler**
 
-   - **Corpo da Requisição**:
+    - **URL**: `/decks/read`
+    - **Método**: `GET`
+    - **Cabeçalho**:
 
-     - Não é necessário
+      ```http
+      Authorization: Bearer
+      ```
 
-   - **Resposta**:
+    - **Corpo da Requisição**:
 
-     ```json
-     {
-       "message": "Flashcards do usuário autenticado"
-     }
-     ```
+      - Não é necessário
+
+3.  **Excluir**
+
+    - **URL**: `/decks/delete/{{nomedodeck}}`
+    - **Método**: `GET`
+    - **Cabeçalho**:
+
+      ```http
+      Authorization: Bearer
+      ```
+
+    - **Corpo da Requisição**:
+
+      - Não é necessário
+
 ---
+
 ## Banco de dados
+
 ```
-CREATE DATABASE duckieanki;
-USE DuckieAnki;
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL UNIQUE,

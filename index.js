@@ -1,25 +1,30 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require("cors"); // Importe o pacote cors
+const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
-const flashcardRoutes = require("./routes/flashcardRoutes");
+const deckRoutes = require("./routes/deckRoutes");
 
 dotenv.config();
 
 const app = express();
 
-// Use o middleware cors para configurar o cabeçalho Access-Control-Allow-Origin
-app.use(cors({
-  origin: 'http://localhost:3000'
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use(express.json());
-app.use("/api", userRoutes);
+// Rotas
+// Usuário autenticado
+app.use("/user", userRoutes);
+// Sem autenticação
 app.use("/auth", authRoutes);
-app.use("/api", flashcardRoutes);
+// Deck
+app.use("/deck", deckRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

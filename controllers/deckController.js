@@ -1,10 +1,10 @@
-// controllers/flashcardController.js
-const db = require("../config/db");
+const db = require("../config/database");
 
-const insertFlashcards = (userId, flashcards, callback) => {
-  const { Decks } = flashcards.UserDecks;
+// Criar Deck (Create)
+const insertDecks = (userId, decks, callback) => {
+  const { Decks } = decks.UserDecks;
 
-  // Adiciona os decks e as questões associadas ao usuário fornecido
+  // Adiciona os decks e as perguntas associadas ao usuário fornecido
   Decks.forEach((deck) => {
     const { deckId, questions } = deck;
 
@@ -38,11 +38,11 @@ const insertFlashcards = (userId, flashcards, callback) => {
     });
   });
 
-  callback(null, { message: "Flashcards inserted successfully" });
+  callback(null, { message: "Decks inserted successfully" });
 };
 
-// Função para ler flashcards de um usuário
-const getFlashcards = (userId, callback) => {
+// Buscar decks (Read)
+const getDecks = (userId, callback) => {
   const query = `
       SELECT
           d.deckId,
@@ -69,48 +69,8 @@ const getFlashcards = (userId, callback) => {
   });
 };
 
-// Função para atualziar flashcards de um usuário
-const updateFlashcard = (
-  questionId,
-  question,
-  responses,
-  correctAnswer,
-  callback
-) => {
-  const updateQuestionQuery = `UPDATE Questions 
-                                 SET question = ?, correctAnswer = ? 
-                                 WHERE questionId = ?`;
-  db.query(
-    updateQuestionQuery,
-    [question, correctAnswer, questionId],
-    (err, result) => {
-      if (err) {
-        return callback(err);
-      }
-      const deleteResponsesQuery = `DELETE FROM Responses WHERE questionId = ?`;
-      db.query(deleteResponsesQuery, [questionId], (err, result) => {
-        if (err) {
-          return callback(err);
-        }
-        const insertResponsesQuery = `INSERT INTO Responses (questionId, response) 
-                                           VALUES (?, ?), (?, ?), (?, ?)`;
-        const responseValues = responses.flatMap((response) => [
-          questionId,
-          response,
-        ]);
-        db.query(insertResponsesQuery, responseValues, (err, result) => {
-          if (err) {
-            return callback(err);
-          }
-          callback(null, { message: "Questão atualizada com sucesso" });
-        });
-      });
-    }
-  );
-};
 
-// Função para excluir flashcards de um usuário
-const deleteFlashcards = (userId, deckId, callback) => {
+const deleteDecks = (userId, deckId, callback) => {
   // Excluir respostas associadas às perguntas do deck
   const deleteResponsesQuery = `
       DELETE r FROM Responses r
@@ -136,15 +96,14 @@ const deleteFlashcards = (userId, deckId, callback) => {
           return callback(err);
         }
 
-        callback(null, { message: "Flashcards deleted successfully" });
+        callback(null, { message: "Decks deleted successfully" });
       });
     });
   });
 };
 
 module.exports = {
-  insertFlashcards,
-  getFlashcards,
-  updateFlashcard,
-  deleteFlashcards,
+  insertDecks,
+  getDecks,
+  deleteDecks,
 };

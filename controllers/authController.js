@@ -1,4 +1,3 @@
-// controllers/authController.js
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -15,7 +14,7 @@ const authController = {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
-      res.status(201).json({ message: "User registered successfully" });
+      res.status(201).json({ message: "Usuário registrador com sucesso." });
     });
   },
 
