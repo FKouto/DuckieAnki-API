@@ -3,6 +3,7 @@ const {
   insertDecks,
   getDecks,
   deleteDecks,
+  updateDecks, // Importe a função updateDecks
 } = require("../controllers/deckController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -33,12 +34,26 @@ router.get("/read", authMiddleware, (req, res) => {
   });
 });
 
-// Deletar deck
+// Deletar deck (Delete)
 router.delete("/delete/:deckId", authMiddleware, (req, res) => {
   const userId = req.user.id;
   const deckId = req.params.deckId;
 
   deleteDecks(userId, deckId, (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(result);
+  });
+});
+
+// Atualizar deck (Update)
+router.put("/update/:deckId", authMiddleware, (req, res) => {
+  const userId = req.user.id;
+  const deckId = req.params.deckId;
+  const updatedDeck = req.body;
+
+  updateDecks(userId, deckId, updatedDeck, (err, result) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
