@@ -15,6 +15,6 @@ router.get("/list", authMiddleware, userController.getAllUsers);
 // Atualizar usuário
 router.put("/update", authMiddleware, userController.updateUser);
 // Deletar usuário
-router.delete("/delete/:id", authMiddleware, userController.deleteUser);
+router.delete("/delete", authMiddleware, userController.deleteUser);
 
 module.exports = router;
