@@ -160,7 +160,7 @@ Authorization: Bearer
 ### Excluir usuário
 
 - **Método**: `DELETE`
-- **URL**: `/user/delete/{{ID}}`
+- **URL**: `/user/delete`
 - **Cabeçalho**:
 
 ```http
