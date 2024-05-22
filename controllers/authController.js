@@ -14,7 +14,17 @@ const authController = {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
-      res.status(201).json({ message: "Usuário registrador com sucesso." });
+
+      // Generate a token after successful registration
+      const token = jwt.sign(
+        { id: result.insertId, email: newUser.email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+
+      res.status(201).json({ message: "Usuário registrado com sucesso.", token });
     });
   },
 

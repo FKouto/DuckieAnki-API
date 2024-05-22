@@ -2,6 +2,8 @@
 const User = require("../models/userModel");
 
 const userController = {
+
+  
   // Criar Usuário (Create)
   createUser: (req, res) => {
     const newUser = {
