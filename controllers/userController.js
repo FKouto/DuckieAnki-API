@@ -56,15 +56,15 @@ const userController = {
     if (req.body.password) {
       updatedUser.password = req.body.password;
     }
-    
-    User.update(req.params.id, updatedUser, (err, result) => {
+    const UserId = req.user.id;
+    User.update(UserId, updatedUser, (err, result) => {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
       if (result.affectedRows === 0) {
         return res.status(404).json({ message: "User not found" });
       }
-      res.json({ id: req.params.id, ...updatedUser });
+      res.json({ id: UserId, ...updatedUser });
     });
   },
   // Deletar usuário (Delete)

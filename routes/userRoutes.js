@@ -13,7 +13,7 @@ router.get("/read", authMiddleware, userController.getUser);
 // Buscar todos os usuários
 router.get("/list", authMiddleware, userController.getAllUsers);
 // Atualizar usuário
-router.put("/update/:id", authMiddleware, userController.updateUser);
+router.put("/update", authMiddleware, userController.updateUser);
 // Deletar usuário
 router.delete("/delete/:id", authMiddleware, userController.deleteUser);
 
