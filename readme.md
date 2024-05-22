@@ -132,7 +132,7 @@ Authorization: Bearer
 ### Obter Usuário por ID
 
 - **Método**: `GET`
-- **URL**: `/user/{{ID}}`
+- **URL**: `/user/read`
 - **Cabeçalho**:
 
 ```http
@@ -142,7 +142,7 @@ Authorization: Bearer
 ### Atualizar Usuário por ID
 
 - **Método**: `PUT`
-- **URL**: `/user/update/{ID}`
+- **URL**: `/user/update`
 - **Cabeçalho**:
 
 ```http
@@ -152,7 +152,6 @@ Authorization: Bearer
 ```json
 {
   "nome": "",
-  "sobrenome": "",
   "email": "",
   "password": ""
 }
