@@ -2,8 +2,6 @@
 const User = require("../models/userModel");
 
 const userController = {
-
-  
   // Criar Usuário (Create)
   createUser: (req, res) => {
     const newUser = {
@@ -20,26 +18,29 @@ const userController = {
     });
   },
   // Buscar usuário por ID (Read)
-  getUserById: (req, res) => {
-    User.findById(req.params.id, (err, result) => {
+  getUser: (req, res) => {
+    // O usuário autenticado está disponível em req.user após o middleware de autenticação
+    const UserID = req.user.id;
+
+    User.findById(UserID, (err, result) => {
       if (err) {
         return res.status(500).json({ error: err.message });
       }
       if (result.length === 0) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "Usuário não encontrado." });
       }
       res.json(result[0]);
     });
   },
   // Buscar todos os usuários (Read)
-  // getAllUsers: (req, res) => {
-  //   User.findAll((err, results) => {
-  //     if (err) {
-  //       return res.status(500).json({ error: err.message });
-  //     }
-  //     res.json(results);
-  //   });
-  // },
+  getAllUsers: (req, res) => {
+    User.findAll((err, results) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      res.json(results);
+    });
+  },
   // Alterar os dados (Update)
   updateUser: (req, res) => {
     const updatedUser = {};
@@ -55,7 +56,7 @@ const userController = {
     if (req.body.password) {
       updatedUser.password = req.body.password;
     }
-
+    
     User.update(req.params.id, updatedUser, (err, result) => {
       if (err) {
         return res.status(500).json({ error: err.message });

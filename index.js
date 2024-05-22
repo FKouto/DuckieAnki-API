@@ -18,13 +18,13 @@ app.use(
 
 app.use(express.json());
 // Rotas
-// Usuário autenticado A
+// Sem autenticação
+app.use("/auth", authRoutes);
+// Usuário autenticado
 app.use("/user", userRoutes);
 app.get("/user", authMiddleware, userRoutes, (req, res) => {
   res.status(201).send("sucesso")
 })
-// Sem autenticação
-app.use("/auth", authRoutes);
 // Deck
 app.use("/deck", deckRoutes);
 

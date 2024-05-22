@@ -142,7 +142,7 @@ Authorization: Bearer
 ### Atualizar Usuário por ID
 
 - **Método**: `PUT`
-- **URL**: `/api/user/{ID}`
+- **URL**: `/user/update/{ID}`
 - **Cabeçalho**:
 
 ```http
@@ -185,32 +185,37 @@ Authorization: Bearer
 
     - **Corpo da Requisição**:
 
-           ```json
-           {
-
-      "UserDecks": {
-      "Decks": [
+      ```json
       {
-      "deckId": "Title",
-      "questions": [
-      {
-      "question": "Question 1",
-      "responses": ["Response 1", "Response 2", "Response 3"],
-      "correctAnswer": 0
-      },
-      {
-      "question": "Question 2",
-      "responses": ["Response A", "Response B", "Response C"],
-      "correctAnswer": 1
+        "UserDecks":{
+            "Decks":[
+              {
+                  "deckId":"Title",
+                  "questions":[
+                    {
+                        "question":"Question 1",
+                        "responses":[
+                          "Response 1",
+                          "Response 2",
+                          "Response 3"
+                        ],
+                        "correctAnswer":0
+                    },
+                    {
+                        "question":"Question 2",
+                        "responses":[
+                          "Response A",
+                          "Response B",
+                          "Response C"
+                        ],
+                        "correctAnswer":1
+                    }
+                  ]
+              }
+            ]
+        }
       }
-      ]
-      }
-      ]
-      }
-      }
-
-      ```
-
+           
       ```
 
     - **Resposta**:

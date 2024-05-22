@@ -8,9 +8,10 @@ const router = express.Router();
 // Criar
 router.post("/create", authMiddleware, userController.createUser);
 // Buscar por ID
-router.get("/read/:id", authMiddleware, userController.getUserById);
+// router.get("/read", authMiddleware, userController.getUserById);
+router.get("/read", authMiddleware, userController.getUser);
 // Buscar todos os usuários
-// router.get("/list", authMiddleware, userController.getAllUsers);
+router.get("/list", authMiddleware, userController.getAllUsers);
 // Atualizar usuário
 router.put("/update/:id", authMiddleware, userController.updateUser);
 // Deletar usuário
