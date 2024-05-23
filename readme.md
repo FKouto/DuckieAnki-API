@@ -283,3 +283,81 @@ CREATE TABLE Responses (
   FOREIGN KEY (questionId) REFERENCES Questions(questionId)
 );
 ```
+---
+# Deck
+Claro! Aqui está um exemplo de README para o seu projeto:
+
+---
+
+# API de Gerenciamento de Decks
+
+Esta API fornece endpoints para criar, listar, buscar e excluir decks de usuários. Os decks consistem em conjuntos de perguntas e respostas associadas.
+
+## Rotas Disponíveis
+
+### Criar Deck
+
+- **Método HTTP**: POST
+- **Rota**: `/create`
+- **Descrição**: Cria um novo deck para o usuário autenticado.
+- **Parâmetros do Corpo (JSON)**:
+  - `decks`: Objeto contendo os decks a serem inseridos, com a estrutura definida abaixo:
+    ```json
+    {
+      "UserDecks":{
+          "Decks":[
+            {
+                "deckTitle":"",
+                "questions":[
+                  {
+                      "question":"",
+                      "responses":[
+                        "Response 1",
+                        "Response 2",
+                        "Response 3"
+                      ],
+                      "correctAnswer":0
+                  }
+                ]
+            }
+          ]
+      }
+    }
+    ```
+- **Autenticação**: Sim
+
+### Listar Todos os Decks
+
+- **Método HTTP**: GET
+- **Rota**: `/list`
+- **Descrição**: Lista todos os decks do usuário autenticado.
+- **Autenticação**: Sim
+
+### Listar Resumo dos Decks
+
+- **Método HTTP**: GET
+- **Rota**: `/summary`
+- **Descrição**: Retorna um resumo dos decks do usuário autenticado, mostrando o título do deck e o número de perguntas em cada um.
+- **Autenticação**: Sim
+
+### Buscar Deck pelo Título
+
+- **Método HTTP**: GET
+- **Rota**: `/:title`
+- **Descrição**: Busca um deck específico pelo título.
+- **Parâmetros de Rota**:
+  - `title`: Título do deck a ser buscado.
+- **Autenticação**: Sim
+
+### Deletar Deck
+
+- **Método HTTP**: DELETE
+- **Rota**: `/:id`
+- **Descrição**: Deleta um deck específico pelo ID.
+- **Parâmetros de Rota**:
+  - `id`: ID do deck a ser deletado.
+- **Autenticação**: Sim
+
+---
+
+Sinta-se à vontade para personalizar este README conforme necessário para o seu projeto.
