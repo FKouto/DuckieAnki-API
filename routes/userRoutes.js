@@ -34,9 +34,13 @@ router.post("/chatbot", async (req, res) => {
   const msg = req.body.message;
 
   try {
-    const result = await chat.sendMessage(msg);
-    const response = result.response;
-    const text = await response.text(); // Adicione "await" para esperar a resolução da promessa
+    let text = "";
+    const result = await chat.sendMessageStream(msg);
+    for await (const chunk of result.stream) {
+      const chunkText = chunk.text();
+      console.log(chunkText);
+      text += chunkText;
+    }
     res.send(text);
   } catch (error) {
     console.error(error);
@@ -45,7 +49,7 @@ router.post("/chatbot", async (req, res) => {
 });
 
 // Adicione este código ao seu arquivo de roteamento
-router.post("/question-create", async (req, res) => {
+router.post("/createDeck", async (req, res) => {
   const { chatHistory, numQuestions, numAnswers } = req.body;
 
   if (!chatHistory || chatHistory.length === 0) {
@@ -79,7 +83,7 @@ router.post("/question-create", async (req, res) => {
   }
 });
 
-router.post("/format", async (req, res) => {
+router.post("/sendDeck", async (req, res) => {
   const { chatHistory, token } = req.body;
 
   if (!chatHistory || chatHistory.length === 0) {
@@ -136,11 +140,11 @@ router.post("/format", async (req, res) => {
 
     // Construa o objeto para enviar para '/deck/create'
     const deckData = {
-      "UserDecks": {
-        "Decks": [
+      UserDecks: {
+        Decks: [
           {
-            "deckTitle": "Node 2123",
-            "questions": formattedData.questions, // Adiciona os dados formatados diretamente aqui
+            deckTitle: "Node 2123",
+            questions: formattedData.questions, // Adiciona os dados formatados diretamente aqui
           },
         ],
       },
