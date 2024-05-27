@@ -48,7 +48,7 @@ router.post("/chatbot", async (req, res) => {
   }
 });
 
-// Adicione este código ao seu arquivo de roteamento
+
 router.post("/createDeck", async (req, res) => {
   const { chatHistory, numQuestions, numAnswers } = req.body;
 
@@ -185,7 +185,5 @@ router.post("/sendDeck", async (req, res) => {
     res.status(500).send("Something went wrong!");
   }
 });
-
-router.post("/send", async (req, res) => {});
 
 module.exports = router;
