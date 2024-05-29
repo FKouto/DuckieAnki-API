@@ -22,8 +22,6 @@ router.put("/update", authMiddleware, userController.updateUser);
 // Deletar usuário
 router.delete("/delete", authMiddleware, userController.deleteUser);
 // Endpoint para receber mensagens do modelo
-// Array para armazenar as mensagens do modelo
-let modelMessages = [];
 
 // ChatBot
 router.post("/chatbot", async (req, res) => {
@@ -47,7 +45,6 @@ router.post("/chatbot", async (req, res) => {
     res.status(500).send("Something went wrong!");
   }
 });
-
 
 router.post("/createDeck", async (req, res) => {
   const { chatHistory, numQuestions, numAnswers } = req.body;
@@ -84,7 +81,7 @@ router.post("/createDeck", async (req, res) => {
 });
 
 router.post("/sendDeck", async (req, res) => {
-  const { chatHistory, token } = req.body;
+  const { titleDeck, chatHistory, token } = req.body;
 
   if (!chatHistory || chatHistory.length === 0) {
     return res.status(400).send("No chat history provided.");
@@ -111,7 +108,7 @@ router.post("/sendDeck", async (req, res) => {
     let text = await response.text();
 
     // Log do texto recebido para depuração
-    console.log("Original text from /format:", text);
+    // console.log("Original text from /format:", text);
 
     // Tentar corrigir o JSON se não for válido
     let formattedData;
@@ -140,11 +137,11 @@ router.post("/sendDeck", async (req, res) => {
 
     // Construa o objeto para enviar para '/deck/create'
     const deckData = {
-      UserDecks: {
-        Decks: [
+      "UserDecks": {
+        "Decks": [
           {
-            deckTitle: "Node 2123",
-            questions: formattedData.questions, // Adiciona os dados formatados diretamente aqui
+            "deckTitle": `"${titleDeck}"`,
+            "questions": formattedData.questions, // Adiciona os dados formatados diretamente aqui
           },
         ],
       },
@@ -155,7 +152,10 @@ router.post("/sendDeck", async (req, res) => {
       "Deck data being sent to /deck/create:",
       JSON.stringify(deckData)
     );
-
+    console.log(
+      "Deck data being sent to /deck/create:",
+      JSON.stringify(deckData)
+    );
     // Chame a rota '/deck/create' com os dados formatados
     const deckCreateResponse = await fetch(
       "http://localhost:8080/deck/create",
