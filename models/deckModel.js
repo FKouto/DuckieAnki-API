@@ -162,7 +162,50 @@ class DeckModel {
       });
     });
   }
+  static getDeckById(userId, deckId, callback) {
+    const deckQuery =
+      "SELECT deckId, deckTitle FROM Decks WHERE userId = ? AND deckId = ?";
 
+    db.query(deckQuery, [userId, deckId], (err, decks) => {
+      if (err) return callback(err);
+
+      if (decks.length === 0) {
+        return callback(null, {
+          message: "No deck found with this ID for this user.",
+        });
+      }
+
+      const questionsQuery = "SELECT * FROM Questions WHERE deckId = ?";
+
+      db.query(questionsQuery, [deckId], (err, questions) => {
+        if (err) return callback(err);
+
+        const questionIds = questions.map((question) => question.questionId);
+        const responsesQuery =
+          "SELECT * FROM Responses WHERE questionId IN (?)";
+
+        db.query(responsesQuery, [questionIds], (err, responses) => {
+          if (err) return callback(err);
+
+          const deckWithDetails = {
+            deckId: decks[0].deckId,
+            deckTitle: decks[0].deckTitle,
+            questions: questions.map((question) => {
+              const questionResponses = responses.filter(
+                (r) => r.questionId === question.questionId
+              );
+              return {
+                ...question,
+                responses: questionResponses,
+              };
+            }),
+          };
+
+          callback(null, deckWithDetails);
+        });
+      });
+    });
+  }
   // Deletar Deck (Delete)
   // Deleta um deck específico e suas perguntas e respostas associadas para um usuário.
   static deleteDeck(userId, deckId, callback) {

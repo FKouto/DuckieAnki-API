@@ -4,6 +4,7 @@ const {
   listUserDecks,
   listUserDecksSummary,
   getDeckByTitle,
+  getDeckById,
   deleteDeck,
 } = require("../controllers/deckController");
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -62,6 +63,25 @@ router.get("/:title", authMiddleware, (req, res) => {
   const deckTitle = req.params.title; // Obtém o título do deck dos parâmetros da URL.
 
   getDeckByTitle(userId, deckTitle, (err, deck) => {
+    if (err) {
+      return res.status(500).json({ error: err.message }); // Retorna erro 500 se houver um erro na consulta.
+    }
+    if (deck.message) {
+      return res.status(404).json({ error: deck.message }); // Retorna erro 404 se o deck não for encontrado.
+    }
+    res.status(200).json(deck); // Retorna o deck encontrado com status 200.
+  });
+});
+
+// Buscar Deck pelo ID (Read)
+// Rota GET para buscar um deck específico pelo ID.
+// Chama a função getDeckById para obter o deck correspondente.
+router.get("/id/:id", authMiddleware, (req, res) => {
+  const userId = req.user.id; // Obtém o ID do usuário autenticado.
+  const deckId = req.params.id; // Obtém o ID do deck dos parâmetros da URL.
+
+  // Chama a função getDeckById para buscar o deck pelo ID.
+  getDeckById(userId, deckId, (err, deck) => {
     if (err) {
       return res.status(500).json({ error: err.message }); // Retorna erro 500 se houver um erro na consulta.
     }

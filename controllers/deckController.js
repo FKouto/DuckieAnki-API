@@ -26,6 +26,10 @@ const getDeckByTitle = (userId, deckTitle, callback) => {
   DeckModel.getDeckByTitle(userId, deckTitle, callback); // Chama a função getDeckByTitle do modelo de dados para obter um deck específico pelo título
 };
 
+const getDeckById = (userId, deckId, callback) => {
+  DeckModel.getDeckById(userId, deckId, callback);
+};
+
 // Função para deletar um deck
 const deleteDeck = (userId, deckId, callback) => {
   DeckModel.deleteDeck(userId, deckId, callback); // Chama a função deleteDeck do modelo de dados para deletar um deck específico
@@ -36,5 +40,6 @@ module.exports = {
   listUserDecks,
   listUserDecksSummary,
   getDeckByTitle,
+  getDeckById,
   deleteDeck,
 };
