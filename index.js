@@ -4,6 +4,7 @@ const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const deckRoutes = require("./routes/deckRoutes");
+const gemRoutes = require("./routes/gemRoutes");
 const authMiddleware = require("./middlewares/authMiddleware");
 
 dotenv.config();
@@ -27,7 +28,8 @@ app.get("/user", authMiddleware, userRoutes, (req, res) => {
 });
 // Deck
 app.use("/deck", deckRoutes);
-
+// Gemini
+app.use("/gemini", gemRoutes);
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
